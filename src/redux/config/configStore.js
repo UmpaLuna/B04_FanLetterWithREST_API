@@ -1,11 +1,11 @@
-import { createStore } from "redux";
-import { combineReducers } from "redux";
-import tabReducer from "../modules/tabReducer";
-import fanLetterData from "../modules/fanLetterDataReducer";
-const rootReducer = combineReducers({
-  tabReducer,
-  fanLetterData,
+import { configureStore } from "@reduxjs/toolkit";
+import tabSlice from "../modules/tabSlice";
+import fanLetterData from "../modules/fanLetterDataSlice";
+const store = configureStore({
+  reducer: {
+    tabSlice,
+    fanLetterData,
+  },
 });
-const store = createStore(rootReducer);
 
 export default store;

@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 //Components & ReduxModules
 import * as St from "../../styledComponents/Styledhome/StyledForm";
-import { handleTabWithPayload } from "../../redux/modules/tabReducer";
-import { updateList } from "../../redux/modules/fanLetterDataReducer";
+import { tabWithPayload } from "../../redux/modules/tabSlice";
+import { updateLists } from "../../redux/modules/fanLetterDataSlice";
 import theme from "../../styledComponents/theme/theme";
 
 function Form() {
@@ -28,7 +28,16 @@ function Form() {
       fanLetterData.value[formRef.target.value] = [];
     }
 
-    dispatch(updateList(formRef));
+    // dispatch(
+    //   updateLists([
+    //     formRef.name.value,
+    //     formRef.text.value,
+    //     formRef.target.value,
+    //   ])
+    // );
+    dispatch(updateLists(formRef));
+    formRef.name.value = "";
+    formRef.text.value = "";
   }, [fanLetterData.value, dispatch]);
 
   const checkValidForm = useCallback(() => {
@@ -73,7 +82,7 @@ function Form() {
             as="select"
             id={selectLabelId}
             onChange={(e) => {
-              dispatch(handleTabWithPayload(e));
+              dispatch(tabWithPayload(e.target.value));
             }}
           >
             {characters.map((item, i) => (

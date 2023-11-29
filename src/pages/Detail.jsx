@@ -8,9 +8,10 @@ import { Input } from "../styledComponents/Styledhome/StyledForm";
 import { Comment as StDetail } from "../styledComponents/Styledhome/StyledLetterForm";
 
 import {
-  editComment,
-  removeComment,
-} from "../redux/modules/fanLetterDataReducer";
+  handleEditComment,
+  handleRemoveComment,
+} from "../redux/modules/fanLetterDataSlice";
+
 import { useDispatch, useSelector } from "react-redux";
 
 function Detail() {
@@ -21,25 +22,23 @@ function Detail() {
 
   //Reducer
   const fanLetterData = useSelector((state) => state.fanLetterData);
+  console.log(fanLetterData);
   const dispatch = useDispatch();
+  console.log(fanLetterData, member, id);
+  const target = fanLetterData.value[member].filter((el) => el.id === id);
 
-  const target = fanLetterData.utility.filteringMember(
-    fanLetterData,
-    member,
-    id
-  );
   const onClickEditComment = useCallback(() => {
     setEdit(!edit);
   }, [edit]);
   const onClickUpdateComment = useCallback(() => {
     if (editText.current.defaultValue === editText.current.value)
       return alert("수정이 안되었는디용");
-    dispatch(editComment({ editText, member, id }));
+    dispatch(handleEditComment({ editText, member, id }));
 
     setEdit(!edit);
   }, [dispatch, edit, id, member]);
   const onClickRemoveComment = useCallback(() => {
-    dispatch(removeComment({ member, id }));
+    dispatch(handleRemoveComment({ member, id }));
     navigate("/");
   }, [dispatch, member, id, navigate]);
 

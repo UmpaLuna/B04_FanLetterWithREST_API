@@ -12,7 +12,7 @@ function LetterList() {
 
   //Reducer
   const fanLetterData = useSelector((state) => state.fanLetterData);
-  const tabReducer = useSelector((state) => state.tabReducer);
+  const tabReducer = useSelector((state) => state.tabSlice);
   const characters = theme.character;
 
   // Component

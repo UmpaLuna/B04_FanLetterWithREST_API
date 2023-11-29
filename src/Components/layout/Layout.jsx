@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 
 //Components & ReduxModules
 import {
-  setLocalStorageData,
+  fetchDataSetLocalStorage,
   setInitialData,
-} from "../../redux/modules/fanLetterDataReducer";
+} from "../../redux/modules/fanLetterDataSlice";
 import Header from "./Header";
 import Footer from "./Footer";
 function Layout({ children }) {
@@ -21,7 +21,7 @@ function Layout({ children }) {
   useEffect(() => {
     console.log("Layout useEffect :", "render");
     const getItem = getLocalStorageItem();
-    if (getItem === null) return dispatch(setLocalStorageData());
+    if (getItem === null) return dispatch(fetchDataSetLocalStorage());
 
     dispatch(setInitialData(getItem));
   }, [dispatch, getLocalStorageItem]);

@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 //Components & ReduxModules
 import * as St from "../../styledComponents/Styledhome/StyledNavigate";
-import { changeTabNumber } from "../../redux/modules/tabReducer";
+import { changeTabNumber } from "../../redux/modules/tabSlice";
 import theme from "../../styledComponents/theme/theme";
 function NavigateBar() {
   console.log("NaviageBar :", "Render");
 
   // Redux
-  const tabReducer = useSelector((state) => state.tabReducer);
+  const tabReducer = useSelector((state) => state.tabSlice);
   const dispatch = useDispatch();
   const characters = theme.character;
 
