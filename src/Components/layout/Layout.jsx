@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import {
   setLocalStorageData,
   setInitialData,
-} from "../redux/modules/fanLetterDataReducer";
+} from "../../redux/modules/fanLetterDataReducer";
 import Header from "./Header";
 import Footer from "./Footer";
 function Layout({ children }) {

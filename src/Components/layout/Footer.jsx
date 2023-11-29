@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import uuid from "react-uuid";
 // Components
-import * as St from "../styledComponents/StyledFoo";
+import * as St from "../../styledComponents/StyledLayout/StyledFoo";
 function Footer() {
   console.log("footer: ", "Render");
   const fooTitleArr = useMemo(

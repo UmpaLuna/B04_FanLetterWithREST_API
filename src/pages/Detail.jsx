@@ -4,8 +4,8 @@ import {
   StDetailContainer,
   StEditButton,
 } from "../styledComponents/StyledDetail";
-import { Input } from "../styledComponents/StyledForm";
-import { Comment as StDetail } from "../styledComponents/StyledLetterForm";
+import { Input } from "../styledComponents/Styledhome/StyledForm";
+import { Comment as StDetail } from "../styledComponents/Styledhome/StyledLetterForm";
 
 import {
   editComment,

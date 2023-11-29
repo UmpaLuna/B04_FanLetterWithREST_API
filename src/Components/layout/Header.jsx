@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import uuid from "react-uuid";
 
 // Components
-import * as St from "../styledComponents/StyledHeader";
-import theme from "../styledComponents/theme/theme";
+import * as St from "../../styledComponents/StyledLayout/StyledHeader";
+import theme from "../../styledComponents/theme/theme";
 
 function Header() {
   const characters = theme.character;

@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 //Components
-import * as St from "../styledComponents/StyledLetterForm";
-import theme from "../styledComponents/theme/theme";
+import * as St from "../../styledComponents/Styledhome/StyledLetterForm";
+import theme from "../../styledComponents/theme/theme";
 
 function LetterList() {
   console.log("LetterList : ", "Render");

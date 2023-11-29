@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { StyledButton } from "./StyledForm";
+import { StyledButton } from "./Styledhome/StyledForm";
 export const StDetailContainer = styled.div`
   width: 400px;
   margin: 60px auto;

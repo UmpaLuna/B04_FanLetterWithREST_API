@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useMemo } from "react";
 import uuid from "react-uuid";
 
-import { StMain, StMainDivImg } from "../styledComponents/StyledHome";
-import Form from "../Components/Form";
-import LetterList from "../Components/LetterList";
-import NavigateBar from "../Components/NavigateBar";
+import {
+  StMain,
+  StMainDivImg,
+} from "../styledComponents/Styledhome/StyledHome";
+import Form from "../Components/home/Form";
+import LetterList from "../Components/home/LetterList";
+import NavigateBar from "../Components/home/NavigateBar";
 import theme from "../styledComponents/theme/theme";
 function Home() {
   console.log("Home :", "Render");
