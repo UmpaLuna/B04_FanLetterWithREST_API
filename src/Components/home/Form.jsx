@@ -15,7 +15,7 @@ function Form() {
   const dispatch = useDispatch();
   const fanLetterData = useSelector((state) => state.fanLetterData);
   const characters = theme.character;
-
+  const auth = useSelector((state) => state.auth);
   //Component
   const formRef = useRef({});
 
@@ -27,14 +27,6 @@ function Form() {
     if (fanLetterData.value[formRef.target.value] === undefined) {
       fanLetterData.value[formRef.target.value] = [];
     }
-
-    // dispatch(
-    //   updateLists([
-    //     formRef.name.value,
-    //     formRef.text.value,
-    //     formRef.target.value,
-    //   ])
-    // );
     dispatch(updateLists(formRef));
     formRef.name.value = "";
     formRef.text.value = "";
@@ -54,14 +46,17 @@ function Form() {
     <St.FormContainer>
       <St.Form>
         <St.InputContainer>
-          <St.InputLabel htmlFor={inputLabelNameId}>nickName</St.InputLabel>
+          {/* <St.InputLabel htmlFor={inputLabelNameId}>nickName</St.InputLabel>
           <St.Input
             ref={(ref) => {
               formRef["name"] = ref;
             }}
             id={inputLabelNameId}
             placeholder="20자만"
-          />
+          /> */}
+          <div style={{ fontSize: "16px" }}>
+            어린분의 닉네임은 :{auth.nickname}
+          </div>
         </St.InputContainer>
         <St.InputContainer>
           <St.InputLabel htmlFor={inputLabelTextId}>Letter</St.InputLabel>
