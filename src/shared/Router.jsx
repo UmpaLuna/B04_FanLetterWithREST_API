@@ -3,17 +3,25 @@ import Detail from "../pages/Detail";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Profile from "../pages/Profile";
-import LayOut from "../pages/LayOut";
+import Layout from "../pages/Layout";
+import { useEffect } from "react";
+import { removeAccessTokenWhereLocalStorage } from "../API/localStorageApi";
 
 const Router = () => {
   console.log("Router :", "Render");
+  useEffect(() => {
+    return () => {
+      console.log("removeLocalStorageData");
+      removeAccessTokenWhereLocalStorage();
+    };
+  }, []);
 
   return (
     <BrowserRouter>
       {/* 로그인, 홈, 상세,프로필 */}
 
       <Routes>
-        <Route path="/" element={<LayOut />}>
+        <Route path="/" element={<Layout />}>
           <Route path="home" element={<Home />} />
           <Route path="profile/:id" element={<Profile />} />
           <Route path="login" element={<Login />} />

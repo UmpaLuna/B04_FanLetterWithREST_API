@@ -10,12 +10,11 @@ import {
 } from "../redux/modules/fanLetterDataSlice";
 import Header from "../Components/layout/Header";
 import Footer from "../Components/layout/Footer";
-function LayOut() {
+function Layout() {
   console.log("LayOut Render");
   const getData = localStorage.getItem("Tooniverse");
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
-  //Reducer
   const dispatch = useDispatch();
   const getLocalStorageItem = useCallback(() => {
     const parseData = JSON.parse(getData);
@@ -26,14 +25,13 @@ function LayOut() {
     console.log("Layout useEffect :", "render");
     const getItem = getLocalStorageItem();
     if (getItem === null) return dispatch(fetchDataSetLocalStorage());
-
     dispatch(setInitialData(getItem));
   }, [dispatch, getLocalStorageItem]);
+
+  // login 시, localStorage에 있는 accessToken 말고 redux에 있는 auth에 있는 걸로  home 보여주기, 아니면 login만 주구장창 보여주긔, 가엽긔
   useEffect(() => {
-    console.log("render auth");
-    console.log(auth.accessToken);
     auth.accessToken ? navigate("/home") : navigate("/login");
-  }, [auth.accessToken, navigate]);
+  }, [auth, navigate]);
   return (
     <>
       <Header />
@@ -43,4 +41,4 @@ function LayOut() {
   );
 }
 
-export default LayOut;
+export default Layout;

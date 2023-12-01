@@ -1,10 +1,14 @@
-import React, { useEffect, useRef } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import React, { useRef } from "react";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as St from "../../styledComponents/StyledLogin/StyledLogin";
-import { useDispatch, useSelector } from "react-redux";
-import { signInInstance } from "../../API/login";
+import { useDispatch } from "react-redux";
+import { signInInstance } from "../../API/loginAxios";
 import { signIn } from "../../redux/modules/authSlice";
+import {
+  getAccessTokenFromLocalStorage,
+  setAccessTokenToLocalStorage,
+} from "../../API/localStorageApi";
 
 function SignIn({ setIsChange }) {
   const signInRef = useRef({});
@@ -19,19 +23,29 @@ function SignIn({ setIsChange }) {
 
     if (id.value.length <= 4 || pwd.value.length <= 4)
       return notifySignUp.signUpFailed();
+    const authInfo = {
+      id: signInRef.id.value,
+      password: signInRef.password.value,
+    };
 
-    await requestJwtServer();
+    await requestJwtServer(authInfo);
   };
 
-  const requestJwtServer = async () => {
+  const requestJwtServer = async (info) => {
     try {
-      const confirmUser = await signInInstance.post("/login", {
-        id: signInRef.id.value,
-        password: signInRef.password.value,
-      });
+      const confirmedUser = await signInInstance.post("/login", info);
+      // 로컬에 먼저 저장 후 다시 받아오고나서
+      setAccessTokenToLocalStorage(confirmedUser);
+
+      const activateAuthInfo = getAccessTokenFromLocalStorage();
+
+      if (!activateAuthInfo.accessToken)
+        throw new Error("유효한 토큰이 없으셈");
+
+      // localStorage에서 받아온 token과 함께 유저 정보 저장
+      dispatch(signIn(activateAuthInfo));
+
       notifySignUp.signUpSuccess();
-      console.log(confirmUser);
-      dispatch(signIn(confirmUser));
     } catch (error) {
       console.log(error);
     }

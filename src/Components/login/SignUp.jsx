@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import * as St from "../../styledComponents/StyledLogin/StyledLogin";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { signUpInstance } from "../../API/login";
+import { signUpInstance } from "../../API/loginAxios";
 function SignUp({ setIsSignUp, setIsChange }) {
   const signUpRef = useRef({});
   const notifySignUp = {

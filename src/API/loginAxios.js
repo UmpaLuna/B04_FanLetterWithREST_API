@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// signIn
+// signIn - instance
 export const signInInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
 });
@@ -25,7 +25,7 @@ signInInstance.interceptors.response.use(
   }
 );
 
-// signUp
+// signUp- instance
 
 export const signUpInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
