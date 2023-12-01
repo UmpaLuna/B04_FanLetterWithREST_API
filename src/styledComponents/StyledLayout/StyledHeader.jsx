@@ -6,6 +6,9 @@ export const LayoutHeader = styled.header`
 `;
 
 export const LayoutLogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
   padding: 0.5rem 1rem;
   height: 100%;
   width: 140px;
@@ -79,3 +82,20 @@ export const LayoutSearchIcon = styled(BsSearch)`
 export const LayoutLogoImg = styled.img.attrs(({ theme: { imgSrc } }) => ({
   src: `${process.env.PUBLIC_URL + imgSrc.logo}`,
 }))``;
+
+export const LayoutLoginBox = styled.div`
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-right: 18px;
+  padding: 1.5rem 1rem;
+  cursor: pointer;
+  &:hover {
+    transition: all 0.3s;
+    color: #333;
+    transition-property: background-color, color;
+    transition-duration: 0.4s;
+    background-color: #00aeef;
+    border-radius: 12px;
+    color: #fff;
+  }
+`;

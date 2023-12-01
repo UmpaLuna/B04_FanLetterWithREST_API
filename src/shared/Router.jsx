@@ -1,9 +1,10 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import Detail from "../pages/Detail";
 import Home from "../pages/Home";
 import Layout from "../Components/layout/Layout";
 import Login from "../pages/Login";
 import Profile from "../pages/Profile";
+
 const Router = () => {
   console.log("Router :", "Render");
 

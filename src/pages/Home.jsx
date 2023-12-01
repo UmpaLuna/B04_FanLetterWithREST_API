@@ -13,7 +13,6 @@ function Home() {
   console.log("Home :", "Render");
   const mainRef = useRef([]);
   const characters = theme.character;
-
   useEffect(() => {
     const moveSlide = setInterval(() => {
       const randomIndex = Math.floor(Math.random() * 5);

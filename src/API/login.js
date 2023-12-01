@@ -1,0 +1,52 @@
+import axios from "axios";
+
+// signIn
+export const signInInstance = axios.create({
+  baseURL: process.env.REACT_APP_BASE_URL,
+});
+
+signInInstance.interceptors.request.use(
+  (config) => {
+    console.log(config);
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+signInInstance.interceptors.response.use(
+  (response) => {
+    const data = response.data;
+    return data;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// signUp
+
+export const signUpInstance = axios.create({
+  baseURL: process.env.REACT_APP_BASE_URL,
+});
+
+signUpInstance.interceptors.request.use(
+  (config) => {
+    console.log("singUp 요청에서 나는것", config);
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+signUpInstance.interceptors.response.use(
+  (respons) => {
+    const data = respons.data;
+    return data;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
