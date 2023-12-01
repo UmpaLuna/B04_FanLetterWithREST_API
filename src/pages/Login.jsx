@@ -23,7 +23,7 @@ function Login() {
       {isChange ? (
         <SignUp setIsSignUp={setIsSignUp} setIsChange={setIsChange} />
       ) : (
-        <SignIn setIsSignUp={setIsSignUp} setIsChange={setIsChange} />
+        <SignIn setIsChange={setIsChange} />
       )}
       <ToastContainer />
     </>

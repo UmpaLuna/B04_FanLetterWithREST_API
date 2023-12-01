@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signInInstance } from "../../API/login";
 import { signIn } from "../../redux/modules/authSlice";
 
-function SignIn({ setIsSignUp, setIsChange }) {
+function SignIn({ setIsChange }) {
   const signInRef = useRef({});
   const dispatch = useDispatch();
   const notifySignUp = {
@@ -30,6 +30,7 @@ function SignIn({ setIsSignUp, setIsChange }) {
         password: signInRef.password.value,
       });
       notifySignUp.signUpSuccess();
+      console.log(confirmUser);
       dispatch(signIn(confirmUser));
     } catch (error) {
       console.log(error);

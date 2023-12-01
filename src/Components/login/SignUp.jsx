@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import * as St from "../../styledComponents/StyledLogin/StyledLogin";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -6,7 +6,7 @@ import { signUpInstance } from "../../API/login";
 function SignUp({ setIsSignUp, setIsChange }) {
   const signUpRef = useRef({});
   const notifySignUp = {
-    signUpSuccess: () => toast.success("회원가입완료", { autoClose: 3000 }),
+    signUpSuccess: () => toast.success("회원가입완료", { autoClose: 2000 }),
     signUpFailed: () => toast.error("거 똑바로 치쇼", { autoClose: 2000 }),
   };
 
