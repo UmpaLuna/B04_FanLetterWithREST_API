@@ -8,39 +8,44 @@ import { Input } from "../styledComponents/Styledhome/StyledForm";
 import { Comment as StDetail } from "../styledComponents/Styledhome/StyledLetterForm";
 
 import {
-  handleEditComment,
-  handleRemoveComment,
-} from "../redux/modules/fanLetterDataSlice";
+  __editPost,
+  __deletePost,
+  __getPosts,
+} from "../redux/modules/postsSlice";
 
 import { useDispatch, useSelector } from "react-redux";
 
 function Detail() {
-  const { member, id } = useParams();
+  const { id, member } = useParams();
   const [edit, setEdit] = useState(false);
   const navigate = useNavigate();
   const editText = useRef();
 
   //Reducer
-  const fanLetterData = useSelector((state) => state.fanLetterData);
-  console.log(fanLetterData);
-  const dispatch = useDispatch();
-  console.log(fanLetterData, member, id);
-  const target = fanLetterData.value[member].filter((el) => el.id === id);
+  const data = useSelector((state) => state.data);
 
+  const dispatch = useDispatch();
+
+  const target = data.posts.filter((el) => {
+    return el.id === parseInt(id);
+  });
+  console.log(target);
   const onClickEditComment = useCallback(() => {
     setEdit(!edit);
   }, [edit]);
   const onClickUpdateComment = useCallback(() => {
     if (editText.current.defaultValue === editText.current.value)
       return alert("수정이 안되었는디용");
-    dispatch(handleEditComment({ editText, member, id }));
+
+    dispatch(__editPost({ editPost: editText.current.value, id }));
 
     setEdit(!edit);
-  }, [dispatch, edit, id, member]);
+  }, [dispatch, edit, id]);
   const onClickRemoveComment = useCallback(() => {
-    dispatch(handleRemoveComment({ member, id }));
+    dispatch(__deletePost(id));
+    dispatch(__getPosts());
     navigate("/");
-  }, [dispatch, member, id, navigate]);
+  }, [dispatch, navigate]);
 
   console.log("Detail :", "Render");
   return (
@@ -51,11 +56,12 @@ function Detail() {
 
       <StDetail.Div>
         <StDetail.Div>
-          <StDetail.Author>name : {target[0].name}</StDetail.Author>
-          <StDetail.Date>{target[0].date}</StDetail.Date>
+          <StDetail.Author>From : {target[0].userid}</StDetail.Author>
+          <StDetail.Author> To : {target[0].writedTo}</StDetail.Author>
+          <StDetail.Date>{target[0].createdAt}</StDetail.Date>
         </StDetail.Div>
         {!edit ? (
-          <StDetail.Text $detail>내용 : {target[0].text}</StDetail.Text>
+          <StDetail.Text $detail>내용 : {target[0].content}</StDetail.Text>
         ) : (
           <Input
             as="textarea"

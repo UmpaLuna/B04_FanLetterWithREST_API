@@ -55,7 +55,7 @@ export const Comment = {
     ${(props) => props.$img && `width:`}
   `,
   Author: styled.p`
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: bold;
     padding: 0.5rem 0;
   `,
@@ -65,7 +65,7 @@ export const Comment = {
   Text: styled.p`
     width: 100%;
     padding: 1rem 0;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

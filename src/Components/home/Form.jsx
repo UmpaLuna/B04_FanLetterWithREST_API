@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 //Components & ReduxModules
 import * as St from "../../styledComponents/Styledhome/StyledForm";
 import { tabWithPayload } from "../../redux/modules/tabSlice";
-import { updateLists } from "../../redux/modules/fanLetterDataSlice";
+import { __addPost } from "../../redux/modules/postsSlice";
 import theme from "../../styledComponents/theme/theme";
 
 function Form() {
@@ -13,47 +13,43 @@ function Form() {
 
   // Reducer
   const dispatch = useDispatch();
-  const fanLetterData = useSelector((state) => state.fanLetterData);
+  const data = useSelector((state) => state.data);
   const characters = theme.character;
   const auth = useSelector((state) => state.auth);
-  //Component
-  const formRef = useRef({});
 
-  const inputLabelNameId = useId();
+  //Component에 필요한 재료들
+  const formRef = useRef({});
   const inputLabelTextId = useId();
   const selectLabelId = useId();
 
-  const setFanLetterData = useCallback(() => {
-    if (fanLetterData.value[formRef.target.value] === undefined) {
-      fanLetterData.value[formRef.target.value] = [];
-    }
-    dispatch(updateLists(formRef));
-    formRef.name.value = "";
+  // checkValidForm 함수 안에 들어가있음
+  const addPostHandler = useCallback(() => {
+    const date = new Date();
+    const newPost = {
+      nickname: auth.nickname,
+      content: formRef.text.value,
+      avatar: auth.avatar,
+      writedTo: formRef.target.value,
+      createdAt: date.toString(),
+      userid: auth.userId,
+    };
+
+    dispatch(__addPost(newPost));
     formRef.text.value = "";
-  }, [fanLetterData.value, dispatch]);
+  }, [auth, dispatch]);
 
+  // 유효성검사조금 하고 포스트 더해주자
   const checkValidForm = useCallback(() => {
-    const name = formRef.name;
     const text = formRef.text;
-
-    if (name.value.trim() === "") return;
     if (text.value.trim() === "") return;
 
-    setFanLetterData();
-  }, [setFanLetterData]);
+    addPostHandler();
+  }, [addPostHandler]);
 
   return (
     <St.FormContainer>
       <St.Form>
         <St.InputContainer>
-          {/* <St.InputLabel htmlFor={inputLabelNameId}>nickName</St.InputLabel>
-          <St.Input
-            ref={(ref) => {
-              formRef["name"] = ref;
-            }}
-            id={inputLabelNameId}
-            placeholder="20자만"
-          /> */}
           <div style={{ fontSize: "16px" }}>
             어린분의 닉네임은 :{auth.nickname}
           </div>

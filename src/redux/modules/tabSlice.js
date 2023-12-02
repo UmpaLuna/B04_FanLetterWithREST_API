@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = 0;
+const initialState = "드래곤볼";
 
 const tabSlice = createSlice({
   name: "tab",
   initialState,
   reducers: {
-    changeTabNumber: (state, action) => {
+    changeTabStringName: (state, action) => {
       return action.payload;
     },
     tabWithPayload: (state, action) => {
@@ -16,5 +16,5 @@ const tabSlice = createSlice({
   },
 });
 
-export const { changeTabNumber, tabWithPayload } = tabSlice.actions;
+export const { changeTabStringName, tabWithPayload } = tabSlice.actions;
 export default tabSlice.reducer;

@@ -11,12 +11,15 @@ function LetterList() {
   console.log("LetterList : ", "Render");
 
   //Reducer
-  const fanLetterData = useSelector((state) => state.fanLetterData);
+  const data = useSelector((state) => state.data);
   const tabReducer = useSelector((state) => state.tabSlice);
-  const characters = theme.character;
 
-  // Component
-  const listArr = fanLetterData.value[characters[tabReducer]];
+  // post에 들어있으면 거 listArr에 담아주쇼 쥔장!@!
+
+  const listArr = data.posts?.filter(
+    (target) => target.writedTo === tabReducer
+  );
+
   const navigate = useNavigate();
   const navigateDetailPage = useCallback(
     (id) => {
@@ -24,23 +27,25 @@ function LetterList() {
     },
     [navigate]
   );
-
+  // 아... 이것도 컴포넌트인데... 다른곳으로 빼주고 싶지만...
   const DoShowList = () => {
-    return listArr.map((item) => {
+    return listArr?.map((item) => {
+      console.log(item.userid);
       return (
         <St.FanLetter
           key={uuid()}
-          onClick={() => navigateDetailPage(`${item.target}/${item.id}`)}
+          onClick={() => navigateDetailPage(`${item.writedTo}/${item.id}`)}
         >
           <St.Comment.Div $img>
             <St.Comment.Avatar />
           </St.Comment.Div>
           <St.Comment.Div $paragraph>
             <St.Comment.Div>
-              <St.Comment.Author>{item.name}</St.Comment.Author>
-              <St.Comment.Date>{item.date}</St.Comment.Date>
+              <St.Comment.Author>{item.userid}님이</St.Comment.Author>
+              <St.Comment.Author>{item.writedTo}에게</St.Comment.Author>
+              <St.Comment.Date>{item.createdAt} </St.Comment.Date>
             </St.Comment.Div>
-            <St.Comment.Text>{item.text}</St.Comment.Text>
+            <St.Comment.Text>{item.content}</St.Comment.Text>
           </St.Comment.Div>
         </St.FanLetter>
       );

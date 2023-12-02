@@ -33,12 +33,13 @@ function SignIn({ setIsChange }) {
 
   const requestJwtServer = async (info) => {
     try {
+      console.log(info);
       const confirmedUser = await signInInstance.post("/login", info);
       // 로컬에 먼저 저장 후 다시 받아오고나서
+      console.log(confirmedUser);
       setAccessTokenToLocalStorage(confirmedUser);
-
       const activateAuthInfo = getAccessTokenFromLocalStorage();
-
+      console.log(activateAuthInfo);
       if (!activateAuthInfo.accessToken)
         throw new Error("유효한 토큰이 없으셈");
 

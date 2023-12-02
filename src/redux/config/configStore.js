@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import tabSlice from "../modules/tabSlice";
-import fanLetterData from "../modules/fanLetterDataSlice";
+import data from "../modules/postsSlice";
 import auth from "../modules/authSlice";
 const store = configureStore({
   reducer: {
     tabSlice,
-    fanLetterData,
+    data,
     auth,
   },
 });

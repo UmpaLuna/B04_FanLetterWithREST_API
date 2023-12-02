@@ -30,7 +30,7 @@ export const NavigateItem = styled.div`
     border: 1px solid transparent;
   }
   ${(props) =>
-    parseInt(props.$isActive) === props.$idx &&
+    props.$isActive === props.$item &&
     `background-color: #00aeef; color:#fff; border: 1px solid transparent;
     `}
 `;

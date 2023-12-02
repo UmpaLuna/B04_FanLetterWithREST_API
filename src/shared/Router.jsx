@@ -6,16 +6,20 @@ import Profile from "../pages/Profile";
 import Layout from "../pages/Layout";
 import { useEffect } from "react";
 import { removeAccessTokenWhereLocalStorage } from "../API/localStorageApi";
-
+import { useDispatch } from "react-redux";
+import { __getPosts } from "../redux/modules/postsSlice";
 const Router = () => {
   console.log("Router :", "Render");
+  const dispatch = useDispatch();
   useEffect(() => {
     return () => {
       console.log("removeLocalStorageData");
       removeAccessTokenWhereLocalStorage();
     };
   }, []);
-
+  useEffect(() => {
+    dispatch(__getPosts());
+  }, []);
   return (
     <BrowserRouter>
       {/* 로그인, 홈, 상세,프로필 */}

@@ -7,7 +7,6 @@ export const signInInstance = axios.create({
 
 signInInstance.interceptors.request.use(
   (config) => {
-    console.log(config);
     return config;
   },
   (error) => {
@@ -18,6 +17,7 @@ signInInstance.interceptors.request.use(
 signInInstance.interceptors.response.use(
   (response) => {
     const data = response.data;
+    console.log(data);
     return data;
   },
   (error) => {
