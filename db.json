@@ -1,5 +1,22 @@
 {
   "posts": [
-
+    {
+      "nickname": "123456",
+      "content": "test",
+      "avatar": null,
+      "writedTo": "드래곤볼",
+      "createdAt": "Sat Dec 02 2023 21:46:13 GMT+0900 (한국 표준시)",
+      "userid": "test123456",
+      "id": 1
+    },
+    {
+      "nickname": "123456",
+      "content": "감사합니다. ",
+      "avatar": null,
+      "writedTo": "드래곤볼",
+      "createdAt": "Sat Dec 02 2023 21:46:22 GMT+0900 (한국 표준시)",
+      "userid": "test123456",
+      "id": 2
+    }
   ]
 }

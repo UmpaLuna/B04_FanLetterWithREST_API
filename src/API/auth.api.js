@@ -1,5 +1,9 @@
 import axios from "axios";
 
+export const authAPI = axios.create({
+  baseURL: process.env.REACT_APP_AUTH_API_BASE_URL,
+});
+
 // signIn - instance
 export const signInInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,

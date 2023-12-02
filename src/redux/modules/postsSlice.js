@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import getPostAxiosApi from "../../API/postAxios";
+import postsAPI from "../../API/posts.api";
 import { useDispatch } from "react-redux";
 // const dispatch = useDispatch();
 const initialState = {
@@ -13,7 +13,7 @@ export const __getPosts = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       // 데이터값 바로준다.
-      const response = await getPostAxiosApi.get("/posts");
+      const response = await postsAPI.get("/posts");
       return thunkAPI.fulfillWithValue(response);
     } catch (error) {
       console.log(error);
@@ -29,7 +29,7 @@ export const __addPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       // 추가 하면 json에 추가되어 id값이 생성된, 등록한 객체 반환해줌
-      const newPost = await getPostAxiosApi.post("/posts", payload);
+      const newPost = await postsAPI.post("/posts", payload);
 
       return thunkAPI.fulfillWithValue(newPost);
     } catch (error) {
@@ -44,7 +44,7 @@ export const __editPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       // content만 수정해주기
-      const response = await getPostAxiosApi.patch(`/posts/${payload.id}`, {
+      const response = await postsAPI.patch(`/posts/${payload.id}`, {
         content: payload.editPost,
       });
       console.log(response);
@@ -60,7 +60,7 @@ export const __deletePost = createAsyncThunk(
   "DELETE_POST",
   async (payload, thunkAPI) => {
     try {
-      await getPostAxiosApi.delete(`/posts/${payload}`);
+      await postsAPI.delete(`/posts/${payload}`);
       return thunkAPI.fulfillWithValue();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

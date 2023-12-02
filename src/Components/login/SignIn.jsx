@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as St from "../../styledComponents/StyledLogin/StyledLogin";
 import { useDispatch } from "react-redux";
-import { signInInstance } from "../../API/loginAxios";
+import { signInInstance } from "../../API/auth.api";
 import { signIn } from "../../redux/modules/authSlice";
 import {
   getAccessTokenFromLocalStorage,
