@@ -1,11 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import postsAPI from "../../API/posts.api";
-import { useDispatch } from "react-redux";
-// const dispatch = useDispatch();
+
 const initialState = {
   posts: [],
   isLoading: false,
-  error: null,
+  error: {
+    status: null,
+    isError: false,
+    message: null,
+  },
 };
 // 불러오기
 export const __getPosts = createAsyncThunk(
@@ -22,7 +25,7 @@ export const __getPosts = createAsyncThunk(
   }
 );
 
-// 추가학시
+// 추가시
 
 export const __addPost = createAsyncThunk(
   "ADD_POST",
@@ -30,9 +33,9 @@ export const __addPost = createAsyncThunk(
     try {
       // 추가 하면 json에 추가되어 id값이 생성된, 등록한 객체 반환해줌
       const newPost = await postsAPI.post("/posts", payload);
-
       return thunkAPI.fulfillWithValue(newPost);
     } catch (error) {
+      console.log("여기서 401이 잡여야함", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -44,12 +47,12 @@ export const __editPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       // content만 수정해주기
-      const response = await postsAPI.patch(`/posts/${payload.id}`, {
+      await postsAPI.patch(`/posts/${payload.id}`, {
         content: payload.editPost,
       });
-      console.log(response);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
+      console.log("editpsot", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -74,56 +77,82 @@ const posts = createSlice({
     // getPost
     [__getPosts.pending]: (state) => {
       state.isLoading = true;
+      state.error.isError = false;
+      state.error.message = "";
+      state.error.status = "";
     },
     [__getPosts.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
+      state.error.isError = false;
+      state.error.message = "";
+      state.error.status = "";
       state.posts = action.payload;
     },
     [__getPosts.rejected]: (state, action) => {
       state.isLoading = false;
-      state.error = action.payload;
+      state.error.isError = true;
+      state.error.message = action.payload.message;
+      state.error.status = action.payload.status;
     },
 
     // Add_Post
     [__addPost.pending]: (state) => {
       state.isLoading = true;
+      state.error.isError = false;
+      state.error.message = "";
+      state.error.status = "";
     },
     [__addPost.fulfilled]: (state, action) => {
       state.isLoading = false;
+      state.error.isError = false;
+      state.error.message = "";
+      state.error.status = "";
       state.posts.push(action.payload);
     },
     [__addPost.rejected]: (state, action) => {
       state.isLoading = false;
-      state.error = action.payload;
+      state.error.isError = true;
+      state.error.message = action.payload.message;
+      state.error.status = action.payload.status;
     },
 
     // EditPost
     [__editPost.pending]: (state) => {
       state.isLoading = true;
+      state.error.isError = false;
+      state.error.message = "";
+      state.error.status = "";
     },
     [__editPost.fulfilled]: (state, action) => {
       state.isLoading = false;
       const targetIndex = state.posts.findIndex(
         (target) => target.id === parseInt(action.payload.id)
       );
+      console.log("여기까지오냐???????????");
       state.posts[targetIndex].content = action.payload.editPost;
     },
     [__editPost.rejected]: (state, action) => {
       state.isLoading = false;
-      state.error = action.payload;
+      state.error.isError = true;
+      state.error.message = action.payload.message;
+      state.error.status = action.payload.status;
     },
 
     // DELETE_POST
     [__deletePost.pending]: (state) => {
       state.isLoading = true;
+      state.error.isError = false;
+      state.error.message = "";
+      state.error.status = "";
     },
     [__deletePost.fulfilled]: (state) => {
       state.isLoading = false;
     },
     [__deletePost.rejected]: (state, action) => {
       state.isLoading = false;
-      state.error = action.payload;
+      state.error.isError = true;
+      state.error.message = action.payload.message;
+      state.error.status = action.payload.status;
     },
   },
 });

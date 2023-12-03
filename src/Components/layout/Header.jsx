@@ -21,7 +21,7 @@ function Header() {
     <St.LayoutHeader>
       <St.LayoutNavBar>
         <St.LayoutLogoContainer>
-          <Link to={"/"}>
+          <Link to={"/home"}>
             <St.LayoutLogoImg />
           </Link>
         </St.LayoutLogoContainer>

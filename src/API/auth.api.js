@@ -11,12 +11,18 @@ export const authAPI = axios.create({
 // 요청전
 authAPI.interceptors.request.use(
   (config) => {
+    const data = getAccessTokenFromLocalStorage();
+
+    if (data) {
+      config.headers["Authorization"] = `Bearer ${data.accessToken}`;
+    }
     return config;
   },
   (error) => {
     console.log("authAPI REQUEST", error);
     //return promise reject를 해주는가?
     //try cath문에서 에러 처리를 해주려고 하는것 때문인가?
+    console.log(error);
     return Promise.reject(error);
   }
 );
@@ -29,18 +35,17 @@ authAPI.interceptors.response.use(
   },
   (error) => {
     const res = error.response;
-    if (res.status === 401) {
-      return Promise.reject(res.status);
-    }
-    console.log("authAPIRESPONES", error.response.status);
-    return Promise.reject(res.status);
+    console.log("authAPIRESPONES", res);
+    return Promise.reject(res);
   }
 );
 
 // 로그인시
-const tokenlimitedTime = "1h";
+
+// 로그인 유효토큰 시간대
+const tokenlimitedTime = "10m";
 export const cancelTokenWarningAlertTime = 3000;
-export const cancelTokenStartTime = 570000;
+export const cancelTokenStartTime = 597000;
 
 export const signInRequestJWTAcessServer = async (info) => {
   try {
@@ -54,8 +59,6 @@ export const signInRequestJWTAcessServer = async (info) => {
     if (!activateAuthInfo.accessToken) throw new Error("유효한 토근 없으셈");
     return activateAuthInfo;
   } catch (error) {
-    console.log(error);
-    console.log("로그인 함수 찍혔냐");
     throw new Error(error);
   }
 };

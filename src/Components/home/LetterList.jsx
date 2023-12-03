@@ -1,36 +1,42 @@
-import React, { useCallback } from "react";
+import React, { useEffect } from "react";
 import uuid from "react-uuid";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 //Components
 import * as St from "../../styledComponents/Styledhome/StyledLetterForm";
-import theme from "../../styledComponents/theme/theme";
+
+import { signOut } from "../../redux/modules/authSlice";
+import { __getPosts } from "../../redux/modules/postsSlice";
 
 function LetterList() {
   console.log("LetterList : ", "Render");
-
+  const dispatch = useDispatch();
   //Reducer
   const data = useSelector((state) => state.data);
   const tabReducer = useSelector((state) => state.tabSlice);
+  const navigate = useNavigate();
 
   // post에 들어있으면 거 listArr에 담아주쇼 쥔장!@!
 
   const listArr = data.posts?.filter(
     (target) => target.writedTo === tabReducer
   );
+  console.log(listArr);
+  const navigateDetailPage = (id, userid) => {
+    navigate(`/detail/${id}`, { state: userid });
+  };
 
-  const navigate = useNavigate();
-  const navigateDetailPage = useCallback(
-    (id) => {
-      navigate(`/detail/${id}`);
-    },
-    [navigate]
-  );
+  useEffect(() => {
+    if (data.error.isError) {
+      dispatch(signOut());
+      dispatch(__getPosts());
+      navigate("/login");
+    }
+  }, [data, dispatch, navigate]);
   // 아... 이것도 컴포넌트인데... 다른곳으로 빼주고 싶지만...
   const DoShowList = () => {
     return listArr?.map((item) => {
-      console.log(item.userid);
       return (
         <St.FanLetter
           key={uuid()}

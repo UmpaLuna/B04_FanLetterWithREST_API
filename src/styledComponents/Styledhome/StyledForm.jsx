@@ -76,3 +76,13 @@ export const Input = styled.input.attrs((props) => ({
 export const Button = styled(StyledButton).attrs({
   type: "button",
 })``;
+
+export const TextArea = styled.textarea.attrs((props) => ({
+  maxLength: 100,
+  readOnly: `${(props) => props.$readOnly}`,
+}))`
+  width: 100%;
+  padding: 10px;
+  height: 120px;
+  resize: none;
+`;
