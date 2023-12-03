@@ -23,13 +23,12 @@ function Detail() {
 
   //Reducer
   const data = useSelector((state) => state.data);
-
   const dispatch = useDispatch();
 
   const target = data.posts.filter((el) => {
     return el.id === parseInt(id);
   });
-  console.log(target);
+
   const onClickEditComment = useCallback(() => {
     setEdit(!edit);
   }, [edit]);
@@ -45,7 +44,7 @@ function Detail() {
     dispatch(__deletePost(id));
     dispatch(__getPosts());
     navigate("/");
-  }, [dispatch, navigate]);
+  }, [dispatch, navigate, id]);
 
   console.log("Detail :", "Render");
   return (

@@ -2,9 +2,11 @@ import React, { useRef } from "react";
 import * as St from "../../styledComponents/StyledLogin/StyledLogin";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { signUpInstance } from "../../API/auth.api";
+import { authAPI, signUpRequestJWTPermission } from "../../API/auth.api";
+
 function SignUp({ setIsSignUp, setIsChange }) {
   const signUpRef = useRef({});
+
   const notifySignUp = {
     signUpSuccess: () => toast.success("회원가입완료", { autoClose: 2000 }),
     signUpFailed: () => toast.error("거 똑바로 치쇼", { autoClose: 2000 }),
@@ -23,23 +25,20 @@ function SignUp({ setIsSignUp, setIsChange }) {
     ) {
       return notifySignUp.signUpFailed();
     }
-
-    // 그게 아니라면 authSlice에 업뎃 그리고 login화면으로
-    await requestSignUpJwtServer().then(() => {
-      setIsSignUp(true);
-      setIsChange(false);
-    });
-  };
-  const requestSignUpJwtServer = async () => {
+    // 위에 있는 if문등도 try에 넣어줘야 하나?
     try {
-      const authSignUpInfo = await signUpInstance.post("/register", {
+      const isValidUserInfo = {
         id: signUpRef.id.value,
         password: signUpRef.password.value,
         nickname: signUpRef.nickName.value,
+      };
+      // 그게 아니라면 authSlice에 업뎃 그리고 login화면으로
+      await signUpRequestJWTPermission(isValidUserInfo).then(() => {
+        setIsSignUp(true);
+        setIsChange(false);
       });
-      console.log(authSignUpInfo);
     } catch (error) {
-      console.log("signUp에서 나는 에러", error);
+      console.log("요청에 문제가 생겼습니다.");
     }
   };
 

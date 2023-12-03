@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { removeAccessTokenWhereLocalStorage } from "../../API/localStorageApi";
 
 const initialState = {
   accessToken: "",
@@ -18,13 +19,13 @@ const auth = createSlice({
       return state;
     },
     signIn(state, { payload }) {
+      console.log(payload);
       state = payload;
       return state;
     },
     signOut(state, { payload }) {
+      removeAccessTokenWhereLocalStorage();
       state = initialState;
-      console.log(initialState);
-      console.log(state);
       return state;
     },
   },

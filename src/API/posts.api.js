@@ -11,7 +11,7 @@ postsAPI.interceptors.request.use(
     console.log("requeset config", config);
 
     // 인증서버에다 먼저 요청보내고 인증처리로 요청 보내는걸 검사해주기
-    authAPI.get("/user");
+    // authAPI.get("/user");
     // config를 return 하지 않으면 요청을 못함
     return config;
   },

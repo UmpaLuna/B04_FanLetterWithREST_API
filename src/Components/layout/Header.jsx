@@ -5,21 +5,16 @@ import uuid from "react-uuid";
 // Components
 import * as St from "../../styledComponents/StyledLayout/StyledHeader";
 import theme from "../../styledComponents/theme/theme";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signOut } from "../../redux/modules/authSlice";
-import {
-  getAccessTokenFromLocalStorage,
-  removeAccessTokenWhereLocalStorage,
-} from "../../API/localStorageApi";
+import { getAccessTokenFromLocalStorage } from "../../API/localStorageApi";
 function Header() {
-  const characters = theme.character;
-  const auth = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-  console.log(auth);
   console.log("Header:", "Render");
+
+  const characters = theme.character;
+  const dispatch = useDispatch();
   const onLogOutClickHandler = () => {
     dispatch(signOut());
-    removeAccessTokenWhereLocalStorage();
   };
   const activateAuth = getAccessTokenFromLocalStorage();
   return (

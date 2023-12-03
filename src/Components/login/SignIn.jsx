@@ -1,20 +1,17 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as St from "../../styledComponents/StyledLogin/StyledLogin";
 import { useDispatch } from "react-redux";
-import { signInInstance } from "../../API/auth.api";
+import { signInRequestJWTAcessServer } from "../../API/auth.api";
 import { signIn } from "../../redux/modules/authSlice";
-import {
-  getAccessTokenFromLocalStorage,
-  setAccessTokenToLocalStorage,
-} from "../../API/localStorageApi";
+import { useNavigate } from "react-router-dom";
 
 function SignIn({ setIsChange }) {
   const signInRef = useRef({});
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const notifySignUp = {
-    signUpSuccess: () => toast.success("로그인완료", { autoClose: 3000 }),
     signUpFailed: () => toast.error("거 똑바로 치쇼", { autoClose: 2000 }),
   };
   const handleSignIn = async () => {
@@ -27,28 +24,12 @@ function SignIn({ setIsChange }) {
       id: signInRef.id.value,
       password: signInRef.password.value,
     };
-
-    await requestJwtServer(authInfo);
-  };
-
-  const requestJwtServer = async (info) => {
     try {
-      console.log(info);
-      const confirmedUser = await signInInstance.post("/login", info);
-      // 로컬에 먼저 저장 후 다시 받아오고나서
-      console.log(confirmedUser);
-      setAccessTokenToLocalStorage(confirmedUser);
-      const activateAuthInfo = getAccessTokenFromLocalStorage();
-      console.log(activateAuthInfo);
-      if (!activateAuthInfo.accessToken)
-        throw new Error("유효한 토큰이 없으셈");
-
-      // localStorage에서 받아온 token과 함께 유저 정보 저장
-      dispatch(signIn(activateAuthInfo));
-
-      notifySignUp.signUpSuccess();
+      const permitedUser = await signInRequestJWTAcessServer(authInfo);
+      dispatch(signIn(permitedUser));
+      navigate("/home");
     } catch (error) {
-      console.log(error);
+      console.log("로그인시 문제가 되는:", error);
     }
   };
 

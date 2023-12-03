@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from "react";
+import React, { useEffect, useRef, useMemo, useState } from "react";
 import uuid from "react-uuid";
 
 import {
@@ -9,9 +9,11 @@ import Form from "../Components/home/Form";
 import LetterList from "../Components/home/LetterList";
 import NavigateBar from "../Components/home/NavigateBar";
 import theme from "../styledComponents/theme/theme";
+
 function Home() {
   console.log("Home :", "Render");
   const mainRef = useRef([]);
+
   const characters = theme.character;
   useEffect(() => {
     const moveSlide = setInterval(() => {

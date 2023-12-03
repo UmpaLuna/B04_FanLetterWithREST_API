@@ -1,56 +1,71 @@
 import axios from "axios";
+import {
+  getAccessTokenFromLocalStorage,
+  setAccessTokenToLocalStorage,
+} from "./localStorageApi";
 
 export const authAPI = axios.create({
   baseURL: process.env.REACT_APP_AUTH_API_BASE_URL,
 });
 
-// signIn - instance
-export const signInInstance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
-});
-
-signInInstance.interceptors.request.use(
+// 요청전
+authAPI.interceptors.request.use(
   (config) => {
     return config;
   },
   (error) => {
+    console.log("authAPI REQUEST", error);
+    //return promise reject를 해주는가?
+    //try cath문에서 에러 처리를 해주려고 하는것 때문인가?
     return Promise.reject(error);
   }
 );
 
-signInInstance.interceptors.response.use(
-  (response) => {
+// 응답받은 직후
+authAPI.interceptors.response.use(
+  async (response) => {
     const data = response.data;
-    console.log(data);
     return data;
   },
   (error) => {
-    return Promise.reject(error);
+    const res = error.response;
+    if (res.status === 401) {
+      return Promise.reject(res.status);
+    }
+    console.log("authAPIRESPONES", error.response.status);
+    return Promise.reject(res.status);
   }
 );
 
-// signUp- instance
+// 로그인시
+const tokenlimitedTime = "1h";
+export const cancelTokenWarningAlertTime = 3000;
+export const cancelTokenStartTime = 570000;
 
-export const signUpInstance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
-});
-
-signUpInstance.interceptors.request.use(
-  (config) => {
-    console.log("singUp 요청에서 나는것", config);
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
+export const signInRequestJWTAcessServer = async (info) => {
+  try {
+    const isConfirmedUser = await authAPI.post(
+      `/login?expiresIn=${tokenlimitedTime}`,
+      info
+    );
+    // 로컬에 먼저 저장 후 다시 받아오고나서
+    setAccessTokenToLocalStorage(isConfirmedUser);
+    const activateAuthInfo = getAccessTokenFromLocalStorage();
+    if (!activateAuthInfo.accessToken) throw new Error("유효한 토근 없으셈");
+    return activateAuthInfo;
+  } catch (error) {
+    console.log(error);
+    console.log("로그인 함수 찍혔냐");
+    throw new Error(error);
   }
-);
+};
 
-signUpInstance.interceptors.response.use(
-  (respons) => {
-    const data = respons.data;
-    return data;
-  },
-  (error) => {
-    return Promise.reject(error);
+// 회원가입시
+export const signUpRequestJWTPermission = async (info) => {
+  try {
+    await authAPI.post("/register", info);
+  } catch (error) {
+    console.log("signUp에서 나는 :", error);
+    throw new Error(error);
   }
-);
+};

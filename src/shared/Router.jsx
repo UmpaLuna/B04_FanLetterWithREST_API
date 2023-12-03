@@ -28,9 +28,9 @@ const Router = () => {
         <Route path="/" element={<Layout />}>
           <Route path="home" element={<Home />} />
           <Route path="profile/:id" element={<Profile />} />
-          <Route path="login" element={<Login />} />
         </Route>
         <Route path={`detail/:member/:id`} element={<Detail />} />
+        <Route path="/login" element={<Login />} />
 
         {/* 404 */}
         <Route path="*" element={<h1>404 찾을수 없으셈</h1>} />
