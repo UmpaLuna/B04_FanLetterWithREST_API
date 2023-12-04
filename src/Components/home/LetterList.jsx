@@ -43,7 +43,7 @@ function LetterList() {
           onClick={() => navigateDetailPage(`${item.writedTo}/${item.id}`)}
         >
           <St.Comment.Div $img>
-            <St.Comment.Avatar />
+            <St.Comment.Avatar $imgSrc={item.avatar} />
           </St.Comment.Div>
           <St.Comment.Div $paragraph>
             <St.Comment.Div>
@@ -60,7 +60,7 @@ function LetterList() {
 
   return (
     <St.FanLetterContainer>
-      {listArr === undefined ? (
+      {listArr.length === 0 ? (
         <St.NothingLetter>
           <St.NothingLetterParagraph>
             그대가 처음이네요.. <br />

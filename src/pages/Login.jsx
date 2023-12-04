@@ -12,6 +12,7 @@ function Login() {
     signUpSuccess: () => toast.success("회원가입완료", { autoClose: 3000 }),
     signUpFailed: () => toast.error("거 똑바로 치쇼", { autoClose: 2000 }),
   };
+
   useEffect(() => {
     if (!isSignUp) return;
     notifySignUp.signUpSuccess();

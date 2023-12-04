@@ -43,15 +43,18 @@ export const FanLetter = styled.div`
     color: #fff;
   }
 `;
-
+// `${process.env.PUBLIC_URL + imgSrc.comment}`
 export const Comment = {
-  Avatar: styled.img.attrs(({ theme: { imgSrc } }) => ({
-    src: `${process.env.PUBLIC_URL + imgSrc.comment}`,
+  Avatar: styled.img.attrs((props) => ({
+    src:
+      `${props.$imgSrc}` ||
+      `${process.env.PUBLIC_URL + props.theme.imgSrc.comment}`,
   }))`
     width: 40px;
     height: 40px;
     object-fit: cover;
     border-radius: 50%;
+    ${(props) => console.log(props.theme.imgSrc.comment)}
     ${(props) => props.$img && `width:`}
   `,
   Author: styled.p`

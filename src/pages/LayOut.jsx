@@ -28,7 +28,7 @@ function Layout() {
         autoClose: 2000,
       }),
   };
-
+  console.log(auth);
   const NumberCountDown = () => {
     const [count, setCount] = useState(3);
     const setIntervalCount = setInterval(() => {

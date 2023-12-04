@@ -28,8 +28,11 @@ const auth = createSlice({
       state = initialState;
       return state;
     },
+    upDateProfile(state, { payload }) {
+      state.avatar = payload.avatar;
+    },
   },
 });
 
-export const { signUp, signIn, signOut } = auth.actions;
+export const { signUp, signIn, signOut, upDateProfile } = auth.actions;
 export default auth.reducer;
